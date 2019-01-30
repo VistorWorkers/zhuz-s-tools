@@ -1,0 +1,58 @@
+/**
+ * 格式化数字单位
+ * @param number
+ * @returns {{value: *, unit: *, magnitude: *}}
+ */
+export function formatUnit(number) {
+    // 单位
+    let units = [{
+        value: 1000000000000,
+        unit : '万亿',
+    }, {
+        value: 100000000000,
+        unit : '千亿',
+    }, {
+        value: 10000000000,
+        unit : '百亿',
+    }, {
+        value: 100000000,
+        unit : '亿',
+    }, {
+        value: 10000000,
+        unit : '千万',
+    }, {
+        value: 1000000,
+        unit : '百万',
+    }, {
+        value: 10000,
+        unit : '万',
+    }]
+    // 格式化的值
+    let resultValue
+    // 格式化后的单位
+    let resultUnit
+    // 格式化后的数量级
+    let resultMagnitude
+
+    number = number - 0 || 0
+
+    for (let i = 0; i < units.length; i++) {
+        let item = units[i]
+        if (number >= item.value) {
+            resultValue = number / item.value // 获取格式化后的值
+            resultUnit = item.unit
+            resultMagnitude = item.value
+            break
+        }
+    }
+
+    if (!resultValue) {
+        resultValue = number
+    }
+
+    return {
+        value    : resultValue,
+        unit     : resultUnit,
+        magnitude: resultMagnitude
+    }
+}
